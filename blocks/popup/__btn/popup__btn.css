@@ -1,0 +1,23 @@
+.popup__btn {
+
+  min-width: 100%;
+  margin: 48px 0 0;
+  padding: 14px 15px 18px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  background: #000000;
+  border: 0;
+  border-radius: 2px;
+  color: #FFFFFF;
+  transition: all .3s ease;
+  cursor: pointer;
+}
+
+.popup__btn:hover {
+  background-color: rgba(0, 0, 0, .8);
+}
+
