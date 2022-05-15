@@ -6,3 +6,12 @@
   color: #545454;
   margin: 0;
 }
+
+@media screen and (max-width: 425px) {
+  .footer__text {
+    max-width: 282px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

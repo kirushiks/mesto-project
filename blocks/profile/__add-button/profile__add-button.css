@@ -5,8 +5,28 @@
   margin-left: auto;
   transition: all .3s ease;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .profile__add-button:hover {
   opacity: .6;
+}
+
+@media screen and (max-width: 675px) {
+  .profile__add-button {
+    margin-left: 0;
+    margin-top: 36px;
+
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+  .profile__add-button {
+    margin-left: 0;
+    margin-top: 36px;
+    min-width: 282px;
+    max-width: 282px;
+    padding: 15px 131px;
+  }
 }

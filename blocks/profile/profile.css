@@ -2,4 +2,12 @@
   padding: 40px 0 0;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 525px)  {
+  .profile {
+    flex-direction: column;
+    padding: 42px 0 0;
+  }
 }

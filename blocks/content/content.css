@@ -2,3 +2,15 @@
   max-width: 880px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 900px) {
+  .content {
+    max-width: calc(100% - 40px);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .content {
+    max-width: 100%;
+  }
+}

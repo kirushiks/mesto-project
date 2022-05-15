@@ -14,10 +14,12 @@
   border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
-.popup__field:first-child {
-  margin-top: 54px;
+.popup__field:first-of-type {
+  margin-top: 0;
 }
 
 .popup__field:focus-visible, .popup__field:focus {
   outline: none;
 }
+
+
