@@ -5,16 +5,17 @@
   margin-left: 18px;
   align-self: center;
   max-width: 24px;
-  border: 1px solid #FFFFFF;
-  transition: all .3s ease;
+  border: 1px solid #ffffff;
+  transition: all 0.3s ease;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items:center ;
+  align-items: center;
+  background-color: transparent;
 }
 
 .profile__edit-button:hover {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 425px) {
