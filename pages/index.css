@@ -46,6 +46,10 @@
 
 @import url(../blocks/element/__like/element__like.css);
 
+@import url(../blocks/element/__like/_active/element__like_active.css);
+
+@import url(../blocks/element/__image/_trash/element__image_trash.css);
+
 
 @import url(../blocks/footer/footer.css);
 
@@ -68,3 +72,14 @@
 
 @import url(../blocks/popup/__close-img/popup__close-img.css);
 
+@import url(../blocks/popup/popup-form-name/popup-form-name.css);
+
+@import url(../blocks/popup/popup__field_value_name/popup__field_value_name.css);
+
+@import url(../blocks/popup/__form/popup__form.css);
+
+@import url(../blocks/popup/__image/popup__image.css);
+
+@import url(../blocks/popup/__card/_title/popup__card_title.css);
+
+@import url(../blocks/popup/__container/_photo/popup__container_photo.css);

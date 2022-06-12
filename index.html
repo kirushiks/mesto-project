@@ -22,63 +22,18 @@
           <div class="profile__name">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button type="button" class="profile__edit-button">
-              <img src="./images/pen.svg" class="profile__edit-button-img" alt="кнопка редактирования">
+
+                <img src="./images/pen.svg" class="profile__edit-button-img" alt="кнопка редактирования">
+
             </button>
           </div>
           <p class="profile__text">Исследователь океана</p>
         </div>
         <button type="button" class="profile__add-button">
-          <img src="./images/plus.svg" class="profile__add-button-img" alt="кнопка добовления">
+          <img src="./images/plus.svg" class="profile__add-button-img" alt="кнопка добавления">
         </button>
       </section>
       <section class="elements">
-        <div class="element">
-          <img src="./images/karachaevsk.jpg" class="element__image" alt="фотография на карточке">
-          <div class="element__info">
-            <h2 class="element__title">Карачаевск</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/elbrus.png" class="element__image" alt="фотография на карточке">
-          <div class="element__info">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/dombai.png" class="element__image" alt="фотография на карточке">
-          <div class="element__info">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/elbrus.png" class="element__image" alt="фотография на карточке">
-          <div class="element__info">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/dombai.png" class="element__image" alt="фотография на карточке">
-          <div class="element__info">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </div>
-
-        <div class="element">
-          <img src="./images/karachaevsk.jpg" class="element__image" alt="фотография на карточке">
-          <div class="element__info">
-            <h2 class="element__title">Карачаево-Черкесия</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </div>
       </section>
     </main>
 
@@ -87,21 +42,48 @@
     </footer>
   </div>
 
-  <div class="popup">
+  <div class="popup" id = "popup_edit">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="popup__form" class="popup__form">
-        <input name="popup-form-name" type="text" value="Жак-Ив Кусто" class="popup__field popup__field_value_name">
-        <input name="popup-form-info" type="text" value="Исследователь океана"
+        <input name="popup-form-name" type="text" value="Жак-Ив Кусто" class="popup__field popup__field_value_name" id = "popup__field_value_name">
+        <input name="popup-form-info" type="text" value="Исследователь океана" id = "popup__field_value_info"
           class="popup__field popup__field_value_info">
-        <button class="popup__btn" type="submit">Сохранить</button>
+        <button class="popup__btn" type="submit" id = "popup_btn_save">Сохранить</button>
       </form>
-      <button type="button" class="popup__close">
+      <button type="button" class="popup__close" id = "popup__edit_close">
         <img src="./images/Close-Icon.svg" class="popup__close-img" alt="кнопка закрытия">
       </button>
     </div>
   </div>
 
+<div class="popup" id = "popup_newplace">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form name="popup__form" class="popup__form">
+        <input name="popup-form-name" type="text" placeholder="Название" class="popup__field popup__field_value_name" id = "popup_newpPlaceName">
+        <input name="popup-form-info" type="text" placeholder="Ссылка на картинку" id = "popup_newpPlaceImg" class="popup__field popup__field_value_info">
+        <button class="popup__btn" type="submit" id = "popup_btn_create">Создать</button>
+      </form>
+      <button type="button" class="popup__close" id = "popup__newplace_close">
+        <img src="./images/Close-Icon.svg" class="popup__close-img" alt="кнопка закрытия">
+      </button>
+    </div>
+  </div>
+
+  <div class="popup" id = "popup_photo">
+    <div class="popup__container_photo">
+    <button type="button" class="popup__close" id = "popup__photo_close">
+      <img src="./images/Close-Icon.svg" class="popup__close-img" alt="кнопка закрытия">
+    </button>
+    <img class="popup__image" src="./images/dombai.png" alt="Домбай">
+    <h2 class="popup__card_title">Домбай</h2>
+    </div>
+  </div>
+
+    <script src="./scripts/sript.js"></script>
+
 </body>
 
 </html>
+
