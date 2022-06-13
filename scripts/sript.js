@@ -10,6 +10,9 @@ const popupCloseAdd = document.querySelector("#popup__newplace_close");
 const popupPhoto = document.querySelector("#popup_photo");
 const popupPhotoClose = document.querySelector("#popup__photo_close");
 
+const popupPhotoImage = popupPhoto.querySelector(".popup__image");
+const popupPhotoTitle = popupPhoto.querySelector(".popup__card_title");
+
 const formElement = document.querySelector("#popup_edit .popup__form");
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__text");
@@ -22,6 +25,9 @@ const elements = document.querySelector(".elements");
 const newPlaceForm = document.querySelector("#popup_newplace .popup__form");
 const newPlaceNameInput = document.querySelector("#popup_newpPlaceName");
 const newPlaceImgInput = document.querySelector("#popup_newpPlaceImg");
+
+const defaultAltText = "Изображение на карточке"
+
 
 const cardTemplate = document
   .querySelector("#card-template")
@@ -59,10 +65,10 @@ const openPopup = (element) => element.classList.add("active");
 const closePopup = (element) => element.classList.remove("active");
 
 popupToggleEdit.addEventListener("click", () => {
-  document.querySelector("#popup__field_value_name").value =
-    profileName.innerHTML;
-  document.querySelector("#popup__field_value_info").value =
-    profileJob.innerHTML;
+  nameInput.value =
+    profileName.textContent;
+  jobInput.value =
+    profileJob.textContent;
   openPopup(popupEdit);
 });
 
@@ -89,12 +95,14 @@ const createCard = (placeName, picURL) => {
   const cardElement = cardTemplate.cloneNode(true);
   const imageElement = cardElement.querySelector(".element__image");
   imageElement.addEventListener("click", () => {
-    popupPhoto.querySelector(".popup__image").src = picURL;
-    popupPhoto.querySelector(".popup__card_title").innerHTML = placeName;
+    popupPhotoImage.src = picURL;
+    popupPhotoImage.alt = placeName||defaultAltText;
+    popupPhotoTitle.textContent = placeName;
     openPopup(popupPhoto);
   });
 
   imageElement.src = picURL;
+  imageElement.alt = placeName||defaultAltText;
 
   cardElement.querySelector(".element__title").textContent = placeName;
 
