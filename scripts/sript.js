@@ -1,3 +1,4 @@
+
 const popupEdit = document.querySelector("#popup_edit");
 const popupToggleEdit = document.querySelector(".profile__edit-button");
 const popupCloseEdit = document.querySelector("#popup__edit_close");
@@ -9,24 +10,6 @@ const popupCloseAdd = document.querySelector("#popup__newplace_close");
 const popupPhoto = document.querySelector("#popup_photo");
 const popupPhotoClose = document.querySelector("#popup__photo_close");
 
-const openPopup = (elem) => {
-  elem.classList.add("active");
-}
-
-const closePopup = (elem) => {
-  elem.classList.remove("active");
-}
-
-popupToggleEdit.addEventListener("click",  () => openPopup(popupEdit));
-
-popupCloseEdit.addEventListener("click",  () => closePopup(popupEdit));
-
-popupToggleAdd.addEventListener("click",  () => openPopup(popupAdd));
-
-popupCloseAdd.addEventListener("click",  () => closePopup(popupAdd));
-
-popupPhotoClose.addEventListener("click",  () => closePopup(popupPhoto));
-
 const formElement = document.querySelector("#popup_edit .popup__form");
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__text");
@@ -34,65 +17,15 @@ const profileJob = document.querySelector(".profile__text");
 const nameInput = document.querySelector("#popup__field_value_name");
 const jobInput = document.querySelector("#popup__field_value_info");
 
-const formSubmitHandler = (evt) => {
-  evt.preventDefault();
-
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  popupEdit.style.display = "none";
-};
-
-formElement.addEventListener("submit", formSubmitHandler);
-
 const elements = document.querySelector(".elements");
 
-const newplaceForm = document.querySelector("#popup_newplace .popup__form");
-const newplaceNameInput = document.querySelector("#popup_newpPlaceName");
-const newplaceImgInput = document.querySelector("#popup_newpPlaceImg");
+const newPlaceForm = document.querySelector("#popup_newplace .popup__form");
+const newPlaceNameInput = document.querySelector("#popup_newpPlaceName");
+const newPlaceImgInput = document.querySelector("#popup_newpPlaceImg");
 
-const changeLikeStatus = (e) => {
-  const elementLike = e.currentTarget;
-  if (elementLike.classList.contains("element__like")) {
-    elementLike.classList.remove("element__like");
-    elementLike.classList.add("element__like_active");
-  } else {
-    elementLike.classList.add("element__like");
-    elementLike.classList.remove("element__like_active");
-  }
-};
-
-const addNewCard = (placeName, picURL) => {
-
-  const cardTemplate = document.querySelector('#card-template').content;
-  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-  const imageElement =  cardElement.querySelector(".element__image");
-  imageElement.addEventListener("click", () => {
-    popupPhoto.querySelector(".popup__image").src = picURL;
-    popupPhoto.querySelector(".popup__card_title").innerHTML = placeName;
-    openPopup(popupPhoto)
-  });
-
-  imageElement.src = picURL;
-
-  cardElement.querySelector(".element__title").textContent = placeName;
-
-  cardElement.querySelector(".element__like").addEventListener("click", changeLikeStatus);
-
-  cardElement.querySelector(".element__image_trash").addEventListener("click", (e) => {
-    elements.removeChild(cardElement);
-  });;
-
-  elements.prepend(cardElement);
-};
-
-const newPlaceFormHandler = (evt) => {
-  evt.preventDefault();
-
-  addNewCard(newplaceNameInput.value, newplaceImgInput.value);
-  popupAdd.style.display = "none";
-};
-
-newplaceForm.addEventListener("submit", newPlaceFormHandler);
+const cardTemplate = document
+  .querySelector("#card-template")
+  .content.querySelector(".element");
 
 const initialCards = [
   {
@@ -121,6 +54,86 @@ const initialCards = [
   },
 ];
 
-initialCards.forEach((card) => {
-  addNewCard(card.name, card.link);
+const openPopup = (element) => element.classList.add("active");
+
+const closePopup = (element) => element.classList.remove("active");
+
+popupToggleEdit.addEventListener("click", () => {
+  document.querySelector("#popup__field_value_name").value =
+    profileName.innerHTML;
+  document.querySelector("#popup__field_value_info").value =
+    profileJob.innerHTML;
+  openPopup(popupEdit);
 });
+
+document.querySelectorAll(".popup").forEach((popup) => {
+  popup
+    .querySelector(".popup__close")
+    .addEventListener("click", () => closePopup(popup));
+});
+
+popupToggleAdd.addEventListener("click", () => openPopup(popupAdd));
+
+const changeLikeStatus = (e) => {
+  const elementLike = e.currentTarget;
+  if (elementLike.classList.contains("element__like")) {
+    elementLike.classList.remove("element__like");
+    elementLike.classList.add("element__like_active");
+  } else {
+    elementLike.classList.add("element__like");
+    elementLike.classList.remove("element__like_active");
+  }
+};
+
+const createCard = (placeName, picURL) => {
+  const cardElement = cardTemplate.cloneNode(true);
+  const imageElement = cardElement.querySelector(".element__image");
+  imageElement.addEventListener("click", () => {
+    popupPhoto.querySelector(".popup__image").src = picURL;
+    popupPhoto.querySelector(".popup__card_title").innerHTML = placeName;
+    openPopup(popupPhoto);
+  });
+
+  imageElement.src = picURL;
+
+  cardElement.querySelector(".element__title").textContent = placeName;
+
+  cardElement
+    .querySelector(".element__like")
+    .addEventListener("click", changeLikeStatus);
+
+  cardElement
+    .querySelector(".element__image_trash")
+    .addEventListener("click", (e) => {
+      elements.removeChild(cardElement);
+    });
+
+  return cardElement;
+};
+
+const handleSubmitForm = (evt) => {
+  evt.preventDefault();
+
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  closePopup(popupEdit);
+};
+
+formElement.addEventListener("submit", handleSubmitForm);
+
+const handleNewPlaceForm = (evt) => {
+  evt.preventDefault();
+
+  const card = createCard(newPlaceNameInput.value, newPlaceImgInput.value);
+  elements.prepend(card);
+  newPlaceNameInput.value = "";
+  newPlaceImgInput.value = "";
+  closePopup(popupAdd);
+};
+
+newPlaceForm.addEventListener("submit", handleNewPlaceForm);
+
+initialCards.forEach(({ name, link }) => {
+  elements.prepend(createCard(name, link));
+});
+

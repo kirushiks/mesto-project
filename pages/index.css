@@ -72,10 +72,6 @@
 
 @import url(../blocks/popup/__close-img/popup__close-img.css);
 
-@import url(../blocks/popup/popup-form-name/popup-form-name.css);
-
-@import url(../blocks/popup/popup__field_value_name/popup__field_value_name.css);
-
 @import url(../blocks/popup/__form/popup__form.css);
 
 @import url(../blocks/popup/__image/popup__image.css);
