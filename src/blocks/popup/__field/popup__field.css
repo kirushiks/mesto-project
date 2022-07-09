@@ -22,11 +22,13 @@
   outline: none;
 }
 
-.popup__field:valid{
+.popup__field:valid {
   border-color: green;
 }
 
-.popup__field:invalid{
+.popup__field:invalid {
   border-color: red;
 }
-
+.popup__field_type_error {
+  border-color: red;
+}

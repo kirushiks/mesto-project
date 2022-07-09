@@ -1,37 +1,63 @@
-/**
- * @param {string} form - Название книги
- * @param {Array} input - Автор книги
- * @param {string} options - Автор книги
- */
- export const validate = (form, input, errorMessage, options) => {
-  if (input.validity.valid) {
-    errorMessage.textContent = "";
-    errorMessage.classList.remove("error_message_active");
-    return;
-  }
-  if (input.value.length == 0) {
-    errorMessage.textContent = "enter text";
-    errorMessage.classList.add("error_message_active");
-    return;
-  }
-  if (!input.validity.typeMismatch) {
-    errorMessage.textContent = "invalid input";
-    errorMessage.classList.add("error_message_active");
-    return;
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(
+    `#${inputElement.id}-error_message`
+  );
+  inputElement.classList.add("popup__field_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("error_message_active");
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(
+    `#${inputElement.id}-error_message`
+  );
+  inputElement.classList.remove("popup__field_type_error");
+  errorElement.classList.remove("error_message_active");
+  errorElement.textContent = "";
+};
+
+const isValid = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
   }
 };
 
-const preventDefaultFunction = (evt) => evt.preventDefault();
-
-export const checkSubmitable = (form, submitButton, listener) => {
-  console.log(form);
-  if (form.checkValidity()) {
-    submitButton.classList.remove("popupbtn_unavailable");
-    form.addEventListener("submit", listener);
-    form.removeEventListener("submit", preventDefaultFunction);
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add("popup__btn_unavailable");
+    buttonElement.setAttribute("disabled", "");
   } else {
-    submitButton.classList.add("popupbtn_unavailable");
-    form.addEventListener("submit", preventDefaultFunction);
-    form.removeEventListener("submit", listener);
+    buttonElement.classList.remove("popup__btn_unavailable");
+    buttonElement.removeAttribute("disabled");
   }
+};
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__field"));
+  const buttonElement = formElement.querySelector(".popup__btn");
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
+      isValid(formElement, inputElement);
+
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+export const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll(".form"));
+  formList.forEach((formElement) => {
+    formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+    });
+
+    setEventListeners(formElement);
+  });
 };

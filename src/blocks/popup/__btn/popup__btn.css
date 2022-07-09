@@ -21,10 +21,10 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* .popup__btn.popup__btn_unavailable {
-  opacity: .6;
+.popup__btn_unavailable {
+  opacity: 0.6;
   background-color: gray;
-} */
+}
 
 @media screen and (max-width: 535px) {
   .popup__btn {

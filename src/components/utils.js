@@ -29,19 +29,11 @@ export const openPopup = (element) => {
 
 export const changeLikeStatus = (evt) => {
   const elementLike = evt.currentTarget;
-  if (elementLike.classList.contains("elementlike")) {
-    elementLike.classList.remove("elementlike");
-    elementLike.classList.add("elementlike_active");
+  if (elementLike.classList.contains("element__like")) {
+    elementLike.classList.remove("element__like");
+    elementLike.classList.add("element__like_active");
   } else {
-    elementLike.classList.add("elementlike");
+    elementLike.classList.add("element__like");
     elementLike.classList.remove("element__like_active");
   }
-};
-
-const handleSubmitFormer = (form) => (evt) => {
-  evt.preventDefault();
-
-  profileName.textContent = profileNameInput.value;
-  profileJob.textContent = profileJobInput.value;
-  closePopup(form.popup);
 };
