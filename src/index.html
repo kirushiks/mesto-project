@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <link rel="stylesheet" href="./pages/index.css" type="text/css" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+</head>
+
+<body>
+  <div class="page">
+
+    <header class="header">
+      <img src="<%=require('./images/logo.-header.svg')%>" class="header__logo" alt="логотип">
+
+
+    </header>
+
+    <main class="content">
+      <section class="profile">
+        <img src="<%=require('./images/profile-avatar.jpg')%>" class="profile__avatar" alt="фотография профиля">
+        <div class="profile__info">
+          <div class="profile__name">
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__edit-button">
+
+              <img src="<%=require('./images/pen.svg')%>" class="profile__edit-button-img" alt="кнопка редактирования">
+
+            </button>
+          </div>
+          <p class="profile__text">Исследователь океана</p>
+        </div>
+        <button type="button" class="profile__add-button">
+          <img src="<%=require('./images/plus.svg')%>" class="profile__add-button-img" alt="кнопка добавления">
+        </button>
+      </section>
+      <section class="elements">
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__text">© 2020 Mesto Russia</p>
+    </footer>
+  </div>
+
+  <div class="popup" id="popup_edit">
+    <form name="profile" class="popup__form" novalidate action="#">
+
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input name="popup-form-name" type="text" value="Жак-Ив Кусто" class="popup__field popup__field_value_name"
+          id="popup__field_value_name" required minlength="1">
+        <span id="popup-form-profile-name-error-message" class="error_message"></span>
+
+
+        <input name="popup-form-info" type="text" value="Исследователь океана" id="popup__field_value_info"
+          class="popup__field popup__field_value_info" required minlength="1">
+        <span id="popup-form-profile-info-error-message" class="error_message"></span>
+
+
+        <button class="popup__btn" type="submit" id="popup_btn_save">Сохранить</button>
+        <button type="button" class="popup__close" id="popup__edit_close">
+          <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__close-img" alt="кнопка закрытия">
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="popup" id="popup_newplace">
+    <form name="newplace" class="popup__form" action="#">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <input name="popup-form-name" type="text" placeholder="Название" class="popup__field popup__field_value_name"
+          id="popup_newPlaceName" required minlength="1">
+        <span id="popup-form-newplace-name-error-message" class="error_message"></span>
+
+
+        <input name="popup-form-info" type="url" placeholder="Ссылка на картинку" id="popup_newPlaceImg"
+          class="popup__field popup__field_value_info" required minlength="1">
+        <span id="popup-form-newplace-info-error-message" class="error_message"></span>
+
+        <button class="popup__btn popup__btn_unavailable" type="submit" id="popup_btn_create">Создать</button>
+        <button type="button" class="popup__close" id="popup__newplace_close">
+          <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__close-img" alt="кнопка закрытия">
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="popup" id="popup_photo">
+    <div class="popup__container_photo">
+      <button type="button" class="popup__close" id="popup__photo_close">
+        <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__close-img" alt="кнопка закрытия">
+      </button>
+      <img class="popup__image" src="" alt="фотография карточки на весь экран">
+      <h2 class="popup__card_title"></h2>
+    </div>
+  </div>
+
+  <template id="card-template">
+    <div class="element">
+      <button type="button" class="element__image_trash"></button>
+      <img src="" class="element__image" alt="фотография на карточке">
+      <div class="element__info">
+        <h2 class="element__title"></h2>
+        <button type="button" class="element__like"></button>
+      </div>
+    </div>
+  </template>
+
+</body>
+
+</html>

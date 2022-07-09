@@ -1,5 +1,4 @@
 .popup__field {
-  
   min-width: 100%;
   display: block;
   margin-top: 27px;
@@ -22,3 +21,12 @@
 .popup__field:focus {
   outline: none;
 }
+
+.popup__field:valid{
+  border-color: green;
+}
+
+.popup__field:invalid{
+  border-color: red;
+}
+
