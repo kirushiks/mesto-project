@@ -50,12 +50,12 @@
       <form name="profile" class="form" novalidate action="#">
 
         <input name="popup-form-name" type="text" value="Жак-Ив Кусто" class="popup__field popup__field_value_name"
-          id="popup__field_value_name" required minlength="1">
+          id="popup__field_value_name" required minlength="2" maxlength="40">
         <span id="popup__field_value_name-error_message" class="error_message"></span>
 
 
         <input name="popup-form-info" type="text" value="Исследователь океана" id="popup__field_value_info"
-          class="popup__field popup__field_value_info" required minlength="1">
+          class="popup__field popup__field_value_info" required minlength="2" maxlength="200">
         <span id="popup__field_value_info-error_message" class="error_message"></span>
 
 
@@ -75,12 +75,12 @@
       <form name="newplace" class="popup__form form" action="#">
 
         <input name="popup-form-name" type="text" placeholder="Название" class="popup__field popup__field_value_name"
-          id="popup_newPlaceName" required minlength="1">
+          id="popup_newPlaceName" required minlength="2" maxlength="30">
         <span id="popup_newPlaceName-error_message" class="error_message"></span>
 
 
         <input name="popup-form-info" type="url" placeholder="Ссылка на картинку" id="popup_newPlaceImg"
-          class="popup__field popup__field_value_info" required minlength="1">
+          class="popup__field popup__field_value_info" required>
         <span id="popup_newPlaceImg-error_message" class="error_message"></span>
 
         <button class="popup__btn" type="submit" id="popup_btn_create">Создать</button>

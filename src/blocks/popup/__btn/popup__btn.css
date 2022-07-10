@@ -22,8 +22,15 @@
 }
 
 .popup__btn_unavailable {
-  opacity: 0.6;
-  background-color: gray;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2);
+  background-color: white;
+}
+
+.popup__btn_unavailable:hover {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.4);
+  background-color: white;
 }
 
 @media screen and (max-width: 535px) {

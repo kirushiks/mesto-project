@@ -1,6 +1,6 @@
 import "../pages/index.css";
 
-import { closePopup, openPopup } from "./utils.js";
+import { closePopup, openPopup } from "./modal.js";
 import { createCard, elements, initialiseCards } from "./card.js";
 
 import { enableValidation } from "./validate";
@@ -51,16 +51,6 @@ const handleNewPlaceForm = (evt) => {
   closePopup(newPlace.popup);
 };
 
-const validationSettings = {
-  form: ".form",
-  input: ".popup__field",
-  saveButton: ".popup__btn",
-  saveButtonDisabled: "popup__btn_unavailable",
-  inputTypeError: "popup__field_type_error",
-  errorMessageActive: "error_message_active",
-  getErrorElementByInput: (inputElement) => `#${inputElement.id}-error_message`,
-};
-
 document.querySelectorAll(".popup").forEach((popup) => {
   popup
     .querySelector(".popup__button_close")
@@ -73,4 +63,11 @@ profile.submitButton.addEventListener("click", handleSubmitForm);
 
 initialiseCards();
 
-enableValidation(validationSettings);
+enableValidation({
+  formSelector: ".form",
+  inputSelector: ".popup__field",
+  submitButtonSelector: ".popup__btn",
+  inactiveButtonClass: "popup__btn_unavailable",
+  inputErrorClass: "popup__field_type_error",
+  errorClass: "error_message_active",
+});

@@ -1,4 +1,4 @@
-import { changeLikeStatus, closePopup, openPopup } from "./utils.js";
+import { closePopup, openPopup } from "./modal.js";
 
 import { PhotoModal } from "./modal";
 
@@ -28,6 +28,17 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+
+export const changeLikeStatus = (evt) => {
+  const elementLike = evt.currentTarget;
+  if (elementLike.classList.contains("element__like")) {
+    elementLike.classList.remove("element__like");
+    elementLike.classList.add("element__like_active");
+  } else {
+    elementLike.classList.add("element__like");
+    elementLike.classList.remove("element__like_active");
+  }
+};
 
 export const elements = document.querySelector(".elements");
 const defaultAltText = "Изображение на карточке";
