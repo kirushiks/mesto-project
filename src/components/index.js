@@ -46,11 +46,31 @@ const handleNewPlaceForm = (evt) => {
     )
   );
   newPlace.form.reset();
+  newPlace.submitButton.setAttribute("disabled", true);
+  newPlace.submitButton.classList.add("popup__btn_unavailable");
   closePopup(newPlace.popup);
 };
 
+const validationSettings = {
+  form: ".form",
+  input: ".popup__field",
+  saveButton: ".popup__btn",
+  saveButtonDisabled: "popup__btn_unavailable",
+  inputTypeError: "popup__field_type_error",
+  errorMessageActive: "error_message_active",
+  getErrorElementByInput: (inputElement) => `#${inputElement.id}-error_message`,
+};
+
+document.querySelectorAll(".popup").forEach((popup) => {
+  popup
+    .querySelector(".popup__button_close")
+    .addEventListener("click", (evt) => {
+      closePopup(popup);
+    });
+});
 newPlace.submitButton.addEventListener("click", handleNewPlaceForm);
 profile.submitButton.addEventListener("click", handleSubmitForm);
+
 initialiseCards();
 
-enableValidation();
+enableValidation(validationSettings);

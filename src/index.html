@@ -44,10 +44,11 @@
   </div>
 
   <div class="popup" id="popup_edit">
-    <form name="profile" class="form" novalidate action="#">
 
-      <div class="popup__container">
-        <h2 class="popup__title">Редактировать профиль</h2>
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form name="profile" class="form" novalidate action="#">
+
         <input name="popup-form-name" type="text" value="Жак-Ив Кусто" class="popup__field popup__field_value_name"
           id="popup__field_value_name" required minlength="1">
         <span id="popup__field_value_name-error_message" class="error_message"></span>
@@ -59,15 +60,20 @@
 
 
         <button class="popup__btn" type="submit" id="popup_btn_save">Сохранить</button>
-      </div>
-    </form>
+      </form>
+
+      <button type="button" class="popup__button_close" id="popup__edit_close">
+        <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__button_close-img" alt="кнопка закрытия">
+      </button>
+    </div>
 
   </div>
 
   <div class="popup" id="popup_newplace">
-    <form name="newplace" class="popup__form form" action="#">
-      <div class="popup__container">
-        <h2 class="popup__title">Новое место</h2>
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form name="newplace" class="popup__form form" action="#">
+
         <input name="popup-form-name" type="text" placeholder="Название" class="popup__field popup__field_value_name"
           id="popup_newPlaceName" required minlength="1">
         <span id="popup_newPlaceName-error_message" class="error_message"></span>
@@ -78,20 +84,29 @@
         <span id="popup_newPlaceImg-error_message" class="error_message"></span>
 
         <button class="popup__btn" type="submit" id="popup_btn_create">Создать</button>
-      </div>
-    </form>
+      </form>
+
+      <button type="button" class="popup__button_close" id="popup__newplace_close">
+        <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__button_close-img" alt="кнопка закрытия">
+      </button>
+    </div>
   </div>
 
   <div class="popup" id="popup_photo">
     <div class="popup__container_photo">
+
       <img class="popup__image" src="" alt="фотография карточки на весь экран">
       <h2 class="popup__card_title"></h2>
+      <button type="button" class="popup__button_close" id="popup__photo_close">
+        <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__button_close-img" alt="кнопка закрытия">
+      </button>
     </div>
   </div>
 
   <template id="card-template">
     <div class="element">
       <button type="button" class="element__image_trash"></button>
+
       <img src="" class="element__image" alt="фотография на карточке">
       <div class="element__info">
         <h2 class="element__title"></h2>

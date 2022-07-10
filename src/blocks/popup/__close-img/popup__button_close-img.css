@@ -1,11 +1,11 @@
-.popup__close-img {
+.popup__button_close-img {
   height: 32px;
   width: 32px;
   display: block;
 }
 
 @media screen and (max-width: 535px) {
-  .popup__close-img {
+  .popup__button_close-img {
     height: 20px;
     width: 20px;
   }
