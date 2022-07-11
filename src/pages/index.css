@@ -13,6 +13,7 @@
 @import url(../blocks/profile/profile.css);
 
 @import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar/profile__avatar_box.css);
 
 @import url(../blocks/profile/__profile-info/profile__info.css);
 
@@ -77,3 +78,11 @@
 @import url(../blocks/popup/__error-message/error_message.css);
 
 @import url(../blocks/popup/__error-message/_active/error_message_active.css);
+
+@import url(../blocks/element/__div_like/element__div_like.css);
+
+@import url(../blocks/element/__like_count/element_like_count.css);
+
+@import url(../blocks/profile/__avatar/editor_button/profile__avatar_editor_button.css);
+
+@import url(../blocks/profile/__avatar/editor_button-img/profile__avatar_editor_button-img.css);

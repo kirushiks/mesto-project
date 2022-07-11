@@ -18,17 +18,24 @@
 
     <main class="content">
       <section class="profile">
-        <img src="<%=require('./images/profile-avatar.jpg')%>" class="profile__avatar" alt="фотография профиля">
+        <div class="profile__avatar_box">
+          <img src="" class="profile__avatar" alt="фотография профиля">
+
+          <button type="button" class="profile__avatar_editor_button">
+            <img src="<%=require('./images/editor.svg')%>" class="profile__avatar_editor_button-img"
+              alt="кнопка редактирования">
+          </button>
+        </div>
         <div class="profile__info">
           <div class="profile__name">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <h1 class="profile__title"></h1>
             <button type="button" class="profile__edit-button">
 
               <img src="<%=require('./images/pen.svg')%>" class="profile__edit-button-img" alt="кнопка редактирования">
 
             </button>
           </div>
-          <p class="profile__text">Исследователь океана</p>
+          <p class="profile__text"></p>
         </div>
         <button type="button" class="profile__add-button">
           <img src="<%=require('./images/plus.svg')%>" class="profile__add-button-img" alt="кнопка добавления">
@@ -49,17 +56,37 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="profile" class="form" novalidate action="#">
 
-        <input name="popup-form-name" type="text" value="Жак-Ив Кусто" class="popup__field popup__field_value_name"
+        <input name="popup-form-name" type="text" value="" class="popup__field popup__field_value_name"
           id="popup__field_value_name" required minlength="2" maxlength="40">
         <span id="popup__field_value_name-error_message" class="error_message"></span>
 
 
-        <input name="popup-form-info" type="text" value="Исследователь океана" id="popup__field_value_info"
+        <input name="popup-form-info" type="text" value="" id="popup__field_value_info"
           class="popup__field popup__field_value_info" required minlength="2" maxlength="200">
         <span id="popup__field_value_info-error_message" class="error_message"></span>
 
 
         <button class="popup__btn" type="submit" id="popup_btn_save">Сохранить</button>
+      </form>
+
+      <button type="button" class="popup__button_close" id="popup__edit_close">
+        <img src="<%=require('./images/Close-Icon.svg')%>" class="popup__button_close-img" alt="кнопка закрытия">
+      </button>
+    </div>
+
+  </div>
+  <div class="popup" id="popup_edit_avatar">
+
+    <div class="popup__container">
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="avatar" class="form" novalidate action="#">
+
+        <input name="popup-form-avatar_link" type="url" value="" id="popup__field_avatar_link" class="popup__field"
+          required>
+        <span id="popup__field_avatar_link-error_message" class="error_message"></span>
+
+
+        <button class="popup__btn" type="submit" id="popup_btn_edit_avatar">Сохранить</button>
       </form>
 
       <button type="button" class="popup__button_close" id="popup__edit_close">
@@ -110,7 +137,10 @@
       <img src="" class="element__image" alt="фотография на карточке">
       <div class="element__info">
         <h2 class="element__title"></h2>
-        <button type="button" class="element__like"></button>
+        <div class="element__div_like">
+          <button type="button" class="element__like"></button>
+          <span class="element__like_count""></span>
+        </div>
       </div>
     </div>
   </template>

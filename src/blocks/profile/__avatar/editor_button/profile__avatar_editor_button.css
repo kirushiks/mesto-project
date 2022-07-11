@@ -1,0 +1,21 @@
+.profile__avatar_editor_button {
+  position: relative;
+  right: -37px;
+  top: -75px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border: none;
+  opacity: 0;
+}
+
+.profile__avatar_box:hover .profile__avatar_editor_button {
+  opacity: 1;
+}
+
+@media screen and (max-width: 535px) {
+  .profile__avatar_editor_button {
+    right: -6px;
+    top: -39px;
+  }
+}

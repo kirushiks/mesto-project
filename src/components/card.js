@@ -1,42 +1,33 @@
-import { closePopup, openPopup } from "./modal.js";
+import * as api from "./api.js";
 
-import { PhotoModal } from "./modal";
+import { PhotoModal, openPopup } from "./modal.js";
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+import { state } from "./state";
 
-export const changeLikeStatus = (evt) => {
+const changeLikeStatus = (evt, likeCounter, cardId) => {
   const elementLike = evt.currentTarget;
   if (elementLike.classList.contains("element__like")) {
-    elementLike.classList.remove("element__like");
-    elementLike.classList.add("element__like_active");
+    api
+      .putLike(cardId)
+      .then(({ likes }) => {
+        elementLike.classList.remove("element__like");
+        elementLike.classList.add("element__like_active");
+        likeCounter.textContent = likes.length;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   } else {
-    elementLike.classList.add("element__like");
-    elementLike.classList.remove("element__like_active");
+    api
+      .deleteLike(cardId)
+      .then(({ likes }) => {
+        elementLike.classList.add("element__like");
+        elementLike.classList.remove("element__like_active");
+        likeCounter.textContent = likes.length;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 
@@ -47,35 +38,71 @@ const cardTemplate = document
   .querySelector("#card-template")
   .content.querySelector(".element");
 
-export const createCard = (placeName, picURL) => {
+const deleteCard = async (cardId) => {
+  return await api.deleteCard(cardId);
+};
+
+export const buildCard = (cardData) => {
   const cardElement = cardTemplate.cloneNode(true);
   const imageElement = cardElement.querySelector(".element__image");
+  const likeCounter = cardElement.querySelector(".element__like_count");
+  const elementLike = cardElement.querySelector(".element__like");
   imageElement.addEventListener("click", () => {
-    PhotoModal.img.src = picURL;
-    PhotoModal.img.alt = placeName || defaultAltText;
-    PhotoModal.title.textContent = placeName;
+    PhotoModal.img.src = cardData.link;
+    PhotoModal.img.alt = cardData.name || defaultAltText;
+    PhotoModal.title.textContent = cardData.name;
     openPopup(PhotoModal.popup);
   });
 
-  imageElement.src = picURL;
-  imageElement.alt = placeName || defaultAltText;
+  likeCounter.textContent = cardData.likes.length;
 
-  cardElement.querySelector(".element__title").textContent = placeName;
+  imageElement.src = cardData.link;
+  imageElement.alt = cardData.name || defaultAltText;
 
-  cardElement
-    .querySelector(".element__like")
-    .addEventListener("click", changeLikeStatus);
+  cardElement.querySelector(".element__title").textContent = cardData.name;
 
-  cardElement
-    .querySelector(".element__image_trash")
-    .addEventListener("click", (e) => {
-      elements.removeChild(cardElement);
-    });
+  // config like status
+  if (cardData.likes.some((like) => like._id == state.ownerId)) {
+    elementLike.classList.remove("element__like");
+    elementLike.classList.add("element__like_active");
+  } else {
+    elementLike.classList.add("element__like");
+    elementLike.classList.remove("element__like_active");
+  }
+  elementLike.addEventListener("click", (evt) =>
+    changeLikeStatus(evt, likeCounter, cardData._id)
+  );
+  // config delete owned card
+  if (state.ownerId == cardData.owner._id) {
+    cardElement
+      .querySelector(".element__image_trash")
+      .addEventListener("click", async (evt) => {
+        await deleteCard(cardData._id)
+          .then(() => {
+            elements.removeChild(cardElement);
+          })
+          .catch((error) =>
+            console.log(`${error} \n Unlucky deleting card ${cardData.name}`)
+          );
+      });
+  } else {
+    cardElement.removeChild(cardElement.querySelector(".element__image_trash"));
+  }
 
   return cardElement;
 };
 
-export const initialiseCards = () =>
-  initialCards.forEach(({ name, link }) => {
-    elements.prepend(createCard(name, link));
-  });
+export const createCard = async (name, link) => {
+  return await api.addCard(name, link);
+};
+
+export const initialCards = async (settings) => {
+  await api
+    .getCards()
+    .then((cards) =>
+      cards.forEach((card) => {
+        elements.prepend(buildCard(card));
+      })
+    )
+    .catch(console.log);
+};
