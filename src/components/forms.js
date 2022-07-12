@@ -3,8 +3,6 @@ import * as api from "./api";
 import { buildCard, createCard, elements } from "./card";
 import { closePopup, openPopup } from "./modal.js";
 
-import { state } from "./state";
-
 const profileName = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__text");
 
@@ -60,12 +58,11 @@ const handleAvatarForm = async (evt) => {
       avatarImg.src = user.avatar;
 
       closePopup(avatar.popup);
-    })
-    .catch(() => {
-      console.log("Asdsadaasddas");
-    })
-    .finally(() => {
+
       avatar.submitButton.textContent = "Сохранить";
+    })
+    .catch((error) => {
+      avatar.submitButton.textContent = "Попробовать снова";
     });
 };
 
@@ -84,12 +81,12 @@ const handleProfileForm = async (evt) => {
       profileJob.textContent = user.about;
 
       closePopup(profile.popup);
-    })
-    .catch(() => {
-      console.log("Something went wrong and you didn't change profile");
-    })
-    .finally(() => {
+
       profile.submitButton.textContent = "Сохранить";
+    })
+    .catch((error) => {
+      console.log("Something went wrong and you didn't change profile");
+      profile.submitButton.textContent = "Попробовать снова";
     });
 };
 
@@ -103,28 +100,30 @@ const handleNewPlaceForm = async (evt) => {
     .then((card) => {
       newPlace.submitButton.textContent = "Сохранить";
 
-      elements.prepend(buildCard(card, { ownerId: state?.ownerId }));
+      elements.prepend(buildCard(card));
+
+      // clear newPlace form
       newPlace.form.reset();
+      if (
+        newPlace.form["popup-form-name"].classList.contains("popup__field_type")
+      )
+        newPlace.form["popup-form-name"].classList.remove("popup__field_type");
+      if (
+        newPlace.form["popup-form-info"].classList.contains("popup__field_type")
+      )
+        newPlace.form["popup-form-info"].classList.remove("popup__field_type");
       newPlace.submitButton.setAttribute("disabled", true);
       newPlace.submitButton.classList.add("popup__btn_unavailable");
       closePopup(newPlace.popup);
     })
     .catch(() => {
-      newPlace.submitButton.textContent = "ERROR ERROR ERROR";
+      newPlace.submitButton.textContent = "Попробовать снова";
     });
 };
 
 // close every popup by line-by-line
 
-document.querySelectorAll(".popup").forEach((popup) => {
-  popup
-    .querySelector(".popup__button_close")
-    .addEventListener("click", (evt) => {
-      closePopup(popup);
-    });
-});
-
-export const initialForms = (initialData) => {
+export const initForms = (initialData) => {
   newPlace.submitButton.addEventListener("click", handleNewPlaceForm);
   profile.submitButton.addEventListener("click", handleProfileForm);
   avatar.submitButton.addEventListener("click", handleAvatarForm);

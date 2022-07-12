@@ -1,7 +1,7 @@
 .profile__avatar_editor_button {
   position: relative;
-  right: -37px;
-  top: -75px;
+  right: 85px;
+  top: -45px;
   cursor: pointer;
   transition: all 0.3s ease;
   background-color: transparent;

@@ -6,12 +6,11 @@ import { state } from "./state";
 
 const changeLikeStatus = (evt, likeCounter, cardId) => {
   const elementLike = evt.currentTarget;
-  if (elementLike.classList.contains("element__like")) {
+  if (elementLike.classList.contains("element__like_active")) {
     api
-      .putLike(cardId)
+      .deleteLike(cardId)
       .then(({ likes }) => {
-        elementLike.classList.remove("element__like");
-        elementLike.classList.add("element__like_active");
+        elementLike.classList.remove("element__like_active");
         likeCounter.textContent = likes.length;
       })
       .catch((error) => {
@@ -19,10 +18,9 @@ const changeLikeStatus = (evt, likeCounter, cardId) => {
       });
   } else {
     api
-      .deleteLike(cardId)
+      .putLike(cardId)
       .then(({ likes }) => {
-        elementLike.classList.add("element__like");
-        elementLike.classList.remove("element__like_active");
+        elementLike.classList.add("element__like_active");
         likeCounter.textContent = likes.length;
       })
       .catch((error) => {
@@ -63,10 +61,8 @@ export const buildCard = (cardData) => {
 
   // config like status
   if (cardData.likes.some((like) => like._id == state.ownerId)) {
-    elementLike.classList.remove("element__like");
     elementLike.classList.add("element__like_active");
   } else {
-    elementLike.classList.add("element__like");
     elementLike.classList.remove("element__like_active");
   }
   elementLike.addEventListener("click", (evt) =>
@@ -96,13 +92,8 @@ export const createCard = async (name, link) => {
   return await api.addCard(name, link);
 };
 
-export const initialCards = async (settings) => {
-  await api
-    .getCards()
-    .then((cards) =>
-      cards.forEach((card) => {
-        elements.prepend(buildCard(card));
-      })
-    )
-    .catch(console.log);
+export const initCards = (cards) => {
+  cards.forEach((card) => {
+    elements.prepend(buildCard(card));
+  });
 };

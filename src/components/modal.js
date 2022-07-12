@@ -1,30 +1,31 @@
-let closureByEsc;
-let closureByClick;
+export const closePopup = (popup) => {
+  popup.classList.remove("popup_opened");
+  document.removeEventListener("keyup", closeByEscape);
+};
 
-export const closePopup = (element) => {
-  if (closureByEsc) {
-    document.removeEventListener("keyup", closureByEsc);
-    document.removeEventListener("click", closureByClick);
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
   }
-  element.classList.remove("active");
-};
-const createClosureByEsc = (popup) => (evt) => {
-  if (evt.key == "Escape") {
-    closePopup(popup);
-  }
-};
-const createClosureByClick = (popup) => (evt) => {
-  if (evt.target === popup) {
-    closePopup(popup);
-  }
-};
-export const openPopup = (element) => {
-  closureByEsc = createClosureByEsc(element);
-  closureByClick = createClosureByClick(element);
-  document.addEventListener("keyup", closureByEsc);
-  document.addEventListener("click", closureByClick);
+}
 
-  element.classList.add("active");
+document.querySelectorAll(".popup").forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+  popup
+    .querySelector(".popup__button_close")
+    .addEventListener("click", (evt) => {
+      closePopup(popup);
+    });
+});
+
+export const openPopup = (popup) => {
+  popup.classList.add("popup_opened");
+  document.addEventListener("keyup", closeByEscape);
 };
 export const PhotoModal = {
   popup: document.querySelector("#popup_photo"),

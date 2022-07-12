@@ -1,7 +1,5 @@
 .profile__avatar_box {
   border-radius: 50%;
-  max-width: 120px;
-  max-height: 120px;
 }
 
 .profile__avatar_box:hover .profile__avatar {

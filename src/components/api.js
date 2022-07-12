@@ -9,16 +9,19 @@ const config = {
   },
 };
 
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject(`Ошибка: ${res.status}`);
+};
+
 export const getUser = async () => {
   return fetch(`${config.apiRoot}/users/me`, {
     method: "GET",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 /**
@@ -34,26 +37,14 @@ export const editUser = async (name, about) => {
     headers: config.headers,
 
     body: JSON.stringify({ name, about }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 export const getCards = async () => {
   return await fetch(`${config.apiRoot}/cards`, {
     method: "GET",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 /**
  *
@@ -68,12 +59,7 @@ export const addCard = async (name, link) => {
     headers: config.headers,
 
     body: JSON.stringify({ name, link }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 /**
  *
@@ -85,12 +71,7 @@ export const deleteCard = async (cardId) => {
   return fetch(`${config.apiRoot}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 /**
  *
@@ -102,12 +83,7 @@ export const putLike = async (cardId) => {
   return fetch(`${config.apiRoot}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 /**
  *
@@ -119,12 +95,7 @@ export const deleteLike = async (cardId) => {
   return fetch(`${config.apiRoot}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 /**
  *
@@ -140,10 +111,5 @@ export const changeAvatar = async (imgLink) => {
     body: JSON.stringify({
       avatar: imgLink,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
