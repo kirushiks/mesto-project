@@ -1,0 +1,21 @@
+.grid__like-button {
+    min-width: 22px;
+    min-height: 19px;
+    background-image: url(../../../images/like.svg);
+    background-color: #FFF;
+    border: none;
+    align-self: center;
+    box-sizing: border-box;
+    padding: 0;
+    cursor: pointer;
+}
+
+.grid__like-button:hover {
+    opacity: 0.5;
+}
+
+.grid__like-button:active {
+    background-image: url(../../../images/like_active.svg);
+    opacity: 1;
+}
+  

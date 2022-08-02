@@ -1,0 +1,37 @@
+.popup__input {
+  min-width: 358px;
+  min-height: 27px;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 30px;
+  padding: 0;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: none;
+}
+
+.popup__input:focus-visible,
+.popup__input:focus {
+  outline: none;
+}
+
+.popup__input_type:valid {
+  border-color: green;
+}
+
+.popup__input_type:invalid {
+  border-color: red;
+}
+.popup__input_type {
+  border-color: red;
+}
+
+@media screen and (max-width: 894px) {
+  .popup__input {
+    min-width: 238px;
+  }
+}

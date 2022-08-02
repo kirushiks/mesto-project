@@ -1,0 +1,6 @@
+.grid__item {
+    min-height: 361px;
+    border-radius: 10px;
+    background-color: #FFF;
+    position: relative;
+}
