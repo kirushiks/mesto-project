@@ -1,0 +1,16 @@
+.grid__bin {
+    background-image: url(../../../images/Trash.svg);
+    min-height: 19px;
+    min-width: 18px;
+    border: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.grid__bin:hover {
+    background-image: url(../../../images/bin_hover.svg);
+}

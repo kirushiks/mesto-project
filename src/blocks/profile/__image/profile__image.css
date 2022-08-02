@@ -1,0 +1,21 @@
+.profile__image {
+    cursor: pointer;
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.profile__image:hover {
+    background-color: rgb(0, 0, 0);
+    opacity: 0.2;
+
+}
+
+@media screen and (max-width: 894px)  {
+    .profile__image {
+        min-width: 120px;
+        min-height: 120px;
+        margin: 0 auto;
+    }
+}

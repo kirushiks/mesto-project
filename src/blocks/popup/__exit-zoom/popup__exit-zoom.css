@@ -1,0 +1,28 @@
+.popup__exit-zoom {
+    background-image: url(../../../images/close_icon.svg);
+    background-color: transparent;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    min-width: 32px;
+    min-height: 32px;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+}
+
+.popup__exit-zoom:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 894px) {
+    .popup__exit-zoom {
+        min-width: 20px;
+        min-height: 20px;
+        background-size: contain;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+}

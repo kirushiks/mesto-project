@@ -1,0 +1,17 @@
+.page__container {
+    max-width: 880px;
+    margin: auto;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+}
+
+@media screen and (max-width: 894px) {
+    .page__container {
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

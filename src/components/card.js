@@ -1,99 +1,106 @@
-import * as api from "./api.js";
+export class Card {
+  constructor(
+    { name, link, likes, owner, _id },
+    { handleZoomClick, handleDeleteClick, handleDeleteLike, handlePutLike },
+    templateSelector,
+    userId
+  ) {
+    this._name = name;
+    this._link = link;
+    this._likes = likes;
+    this.owner = owner._id;
+    this._id = _id;
 
-import { PhotoModal, openPopup } from "./modal.js";
+    this._handleDeleteClick = handleDeleteClick;
+    this._handleZoomClick = handleZoomClick;
+    this._handlePutLike = handlePutLike;
+    this._handleDeleteLike = handleDeleteLike;
 
-import { state } from "./state";
+    this._templateSelector = templateSelector;
+    this._userId = userId;
+  }
 
-const changeLikeStatus = (evt, likeCounter, cardId) => {
-  const elementLike = evt.currentTarget;
-  if (elementLike.classList.contains("element__like_active")) {
-    api
-      .deleteLike(cardId)
-      .then(({ likes }) => {
-        elementLike.classList.remove("element__like_active");
-        likeCounter.textContent = likes.length;
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this._templateSelector)
+      .content.children[0].cloneNode(true);
+
+    return cardElement;
+  }
+
+  createCard() {
+    this._card = this._getTemplate();
+    this._likeButton = this._card.querySelector(".grid__like-button");
+    this._cardImage = this._card.querySelector("#grid__image");
+    this._cardTitle = this._card.querySelector(".grid__title");
+    this._cardLikeCounter = this._card.querySelector(".grid__like-counter");
+
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
+
+    this._putDeleteSign();
+
+    this._cardLikeCounter.textContent = this._likes.length;
+    this.isLiked();
+
+    this._setEventListeners();
+
+    // Возвращает готовую наполненную данными карточку
+    return this._card;
+  }
+
+  // Навешивает корзинку
+  _putDeleteSign() {
+    this._cardDeleteBin = this._card.querySelector(".grid__bin");
+
+    if (this._userId !== this._owner) {
+      this._cardDeleteBin.remove();
+    }
+  }
+
+  _setEventListeners() {
+    // Удаление
+    this._cardDeleteBin.addEventListener("click", () => {
+      this._handleDeleteClick(this._id);
+    });
+    // Лайк
+    this._likeButton.addEventListener("click", () => {
+      if (this._likeButton.classList.contains("grid__like-button_active")) {
+        this._handleDeleteLike(this._id);
+      } else {
+        this._handlePutLike(this._id);
+      }
+    });
+    // Зум
+    this._cardImage.addEventListener("click", () => {
+      this._handleZoomClick(this._name, this._link);
+    });
+  }
+
+  likeCardOption(dataFromServer) {
+    this._likes = dataFromServer.likes;
+    this._cardLikeCounter.textContent = this._likes.length;
+
+    this._likeButton.classList.toggle("grid__like-button_active");
+  }
+
+  isLiked() {
+    if (
+      this._likes.some((user) => {
+        return this._userId === user._id;
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  } else {
-    api
-      .putLike(cardId)
-      .then(({ likes }) => {
-        elementLike.classList.add("element__like_active");
-        likeCounter.textContent = likes.length;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-};
-
-export const elements = document.querySelector(".elements");
-const defaultAltText = "Изображение на карточке";
-
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".element");
-
-const deleteCard = async (cardId) => {
-  return await api.deleteCard(cardId);
-};
-
-export const buildCard = (cardData) => {
-  const cardElement = cardTemplate.cloneNode(true);
-  const imageElement = cardElement.querySelector(".element__image");
-  const likeCounter = cardElement.querySelector(".element__like_count");
-  const elementLike = cardElement.querySelector(".element__like");
-  imageElement.addEventListener("click", () => {
-    PhotoModal.img.src = cardData.link;
-    PhotoModal.img.alt = cardData.name || defaultAltText;
-    PhotoModal.title.textContent = cardData.name;
-    openPopup(PhotoModal.popup);
-  });
-
-  likeCounter.textContent = cardData.likes.length;
-
-  imageElement.src = cardData.link;
-  imageElement.alt = cardData.name || defaultAltText;
-
-  cardElement.querySelector(".element__title").textContent = cardData.name;
-
-  // config like status
-  if (cardData.likes.some((like) => like._id == state.ownerId)) {
-    elementLike.classList.add("element__like_active");
-  } else {
-    elementLike.classList.remove("element__like_active");
-  }
-  elementLike.addEventListener("click", (evt) =>
-    changeLikeStatus(evt, likeCounter, cardData._id)
-  );
-  // config delete owned card
-  if (state.ownerId == cardData.owner._id) {
-    cardElement
-      .querySelector(".element__image_trash")
-      .addEventListener("click", async (evt) => {
-        await deleteCard(cardData._id)
-          .then(() => {
-            elements.removeChild(cardElement);
-          })
-          .catch((error) =>
-            console.log(`${error} \n Unlucky deleting card ${cardData.name}`)
-          );
-      });
-  } else {
-    cardElement.removeChild(cardElement.querySelector(".element__image_trash"));
+    ) {
+      this._likeButton.classList.add("grid__like-button_active");
+    }
   }
 
-  return cardElement;
-};
+  getCardId() {
+    return this._id;
+  }
 
-export const createCard = async (name, link) => {
-  return await api.addCard(name, link);
-};
-
-export const initCards = (cards) => {
-  cards.forEach((card) => {
-    elements.prepend(buildCard(card));
-  });
-};
+  removeCard() {
+    this._card.remove();
+    this._card = null;
+  }
+}

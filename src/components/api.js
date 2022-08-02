@@ -1,115 +1,77 @@
-const TOKEN = "9276f40f-54c8-483e-8c73-e0173e1ddf50";
-const groupId = "plus-cohort-13";
-
-const config = {
-  apiRoot: `https://mesto.nomoreparties.co/v1/${groupId}`,
-  headers: {
-    authorization: TOKEN,
-    "Content-Type": "application/json",
-  },
-};
-
-const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
+export class Api {
+  #onResponse(res) {
+    return res.ok ? res.json() : Promise.reject('Error data load')
+  };
+  constructor(config) {
+    this._url = config.url;
+    this._headers = config.headers;
+  }
+  //Загрузка информации о пользователе с сервера
+  getUserInfo() {
+  return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: this._headers,
+    })
+    .then((res) => this.#onResponse(res));
+  }
+  // Загрузка карточек с сервера
+  getAllCards() {
+  return fetch(`${this._url}/cards`, {
+      method: 'GET',
+      headers: this._headers,
+    })
+    .then((res) => this.#onResponse(res));
+  };
+  // Контролер общей загрузки
+  allUploadInfo() {
+  return Promise.all([this.getAllCards(), this.getUserInfo()])
+  }
+  
+  editProfile(data) {
+  return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then((res) => this.#onResponse(res));
+  }
+  editAvatar(data) {
+  return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then((res) => this.#onResponse(res));
+  }
+  // Добавление новой карточки
+  postCard(data) {
+  return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then((res) => this.#onResponse(res));
+  }
+  deleteCard(dataCardId) {
+  return fetch(`${this._url}/cards/${dataCardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then((res) => this.#onResponse(res));
+  }
+  putLike(cardId) {
+  return fetch(`${this._url}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+    .then((res) => this.#onResponse(res));
   }
 
-  return Promise.reject(`Ошибка: ${res.status}`);
-};
-
-export const getUser = async () => {
-  return fetch(`${config.apiRoot}/users/me`, {
-    method: "GET",
-    headers: config.headers,
-  }).then(checkResponse);
-};
-
-/**
- *
- * @param {string} name - name of user
- * @param {string} about - description of user
- *
- * @returns
- */
-export const editUser = async (name, about) => {
-  return fetch(`${config.apiRoot}/users/me`, {
-    method: "PATCH",
-    headers: config.headers,
-
-    body: JSON.stringify({ name, about }),
-  }).then(checkResponse);
-};
-
-export const getCards = async () => {
-  return await fetch(`${config.apiRoot}/cards`, {
-    method: "GET",
-    headers: config.headers,
-  }).then(checkResponse);
-};
-/**
- *
- * @param {string} name - name of card you add
- * @param {string} link - link of image on card you add
- *
- * @returns
- */
-export const addCard = async (name, link) => {
-  return fetch(`${config.apiRoot}/cards`, {
-    method: "POST",
-    headers: config.headers,
-
-    body: JSON.stringify({ name, link }),
-  }).then(checkResponse);
-};
-/**
- *
- * @param {string} cardId - id of card you delete
- *
- * @returns
- */
-export const deleteCard = async (cardId) => {
-  return fetch(`${config.apiRoot}/cards/${cardId}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(checkResponse);
-};
-/**
- *
- * @param {string} cardId - id of card you like
- *
- * @returns
- */
-export const putLike = async (cardId) => {
-  return fetch(`${config.apiRoot}/cards/likes/${cardId}`, {
-    method: "PUT",
-    headers: config.headers,
-  }).then(checkResponse);
-};
-/**
- *
- * @param {string} cardId - id of card you dislike
- *
- * @returns
- */
-export const deleteLike = async (cardId) => {
-  return fetch(`${config.apiRoot}/cards/likes/${cardId}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(checkResponse);
-};
-/**
- *
- * @param {string} imgLink - link of image you replace insted of current avatar
- *
- * @returns
- */
-export const changeAvatar = async (imgLink) => {
-  return fetch(`${config.apiRoot}/users/me/avatar`, {
-    method: "PATCH",
-    headers: config.headers,
-
-    body: JSON.stringify({
-      avatar: imgLink,
-    }),
-  }).then(checkResponse);
-};
+  deleteLike(cardId) {
+    return fetch(`${this._url}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then((res) => this.#onResponse(res));
+    }
+}
