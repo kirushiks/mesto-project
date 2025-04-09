@@ -9,6 +9,4 @@
 4. Flex
 5. БЭМ
 6. System version control: git
-7. Модальный окна
-
-https://kirushiks.github.io/mesto-project/index.html
+7. Модальные  окна
